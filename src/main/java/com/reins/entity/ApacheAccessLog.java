@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 @Data
 @Slf4j
-public class AccessLog implements Serializable {
+public class ApacheAccessLog implements Serializable {
     private String ipAddress;
     private String clientIdentd;
     private String userID;
@@ -20,7 +20,7 @@ public class AccessLog implements Serializable {
     private int responseCode;
     private long contentSize;
 
-    private AccessLog(String ipAddress, String clientIdentd, String userID,
+    private ApacheAccessLog(String ipAddress, String clientIdentd, String userID,
                             String dateTime, String method, String endpoint,
                             String protocol, String responseCode,
                             String contentSize) {
@@ -42,14 +42,14 @@ public class AccessLog implements Serializable {
             "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)";
     private static final Pattern PATTERN = Pattern.compile(LOG_ENTRY_PATTERN);
 
-    public static AccessLog parseFromLogLine(String logline) {
+    public static ApacheAccessLog parseFromLogLine(String logline) {
         Matcher m = PATTERN.matcher(logline);
         if (!m.find()) {
             log.info("Cannot parse logline:{}", logline);
             throw new RuntimeException("Error parsing logline");
         }
 
-        return new AccessLog(m.group(1), m.group(2), m.group(3), m.group(4),
+        return new ApacheAccessLog(m.group(1), m.group(2), m.group(3), m.group(4),
                 m.group(5), m.group(6), m.group(7), m.group(8), m.group(9));
     }
 

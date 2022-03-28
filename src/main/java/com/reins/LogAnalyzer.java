@@ -1,6 +1,6 @@
 package com.reins;
 
-import com.reins.entity.AccessLog;
+import com.reins.entity.ApacheAccessLog;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -42,12 +42,12 @@ public class LogAnalyzer {
 
         // Convert the text log lines to ApacheAccessLog objects and cache them
         //   since multiple transformations and actions will be called on that data.
-        JavaRDD<AccessLog> accessLogs = logLines.map(AccessLog::parseFromLogLine).cache();
+        JavaRDD<ApacheAccessLog> accessLogs = logLines.map(ApacheAccessLog::parseFromLogLine).cache();
 
         // Calculate statistics based on the content size.
         // Note how the contentSizes are cached as well since multiple actions
         //   are called on that RDD.
-        JavaRDD<Long> contentSizes = accessLogs.map(AccessLog::getContentSize).cache();
+        JavaRDD<Long> contentSizes = accessLogs.map(ApacheAccessLog::getContentSize).cache();
         System.out.println(String.format("Content Size Avg: %s, Min: %s, Max: %s",
                                 contentSizes.reduce(SUM_REDUCER) / contentSizes.count(),
                                 contentSizes.min(Comparator.naturalOrder()),

@@ -31,13 +31,13 @@ class Test{
 
         Collection<String> topics = Arrays.asList("test", "test2");
 
-        JavaInputDStream<ConsumerRecord<String, String>> stream =
-                KafkaUtils.createDirectStream(
-                        streamingContext,
-                        LocationStrategies.PreferConsistent(),
-                        ConsumerStrategies.<String, String>Subscribe(topics, kafkaParams)
-                );
-
-        stream.mapToPair(record -> new Tuple2<>(record.key(), record.value()));
+//        JavaInputDStream<ConsumerRecord<String, String>> stream =
+//                KafkaUtils.createDirectStream(
+//                        streamingContext,
+//                        LocationStrategies.PreferConsistent(),
+//                        ConsumerStrategies.<String, String>Subscribe(topics, kafkaParams)
+//                );
+//
+//        stream.mapToPair(record -> new Tuple2<>(record.key(), record.value()));
     }
 }

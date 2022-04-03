@@ -18,6 +18,13 @@
             <artifactId>spark-core_2.12</artifactId>
             <version>3.1.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10 -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql-kafka-0-10_2.12</artifactId>
+            <version>3.1.3</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka-0-10 -->
         <dependency>
             <groupId>org.apache.spark</groupId>
@@ -47,7 +54,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.reins.LogAnalyzer</mainClass>
+                            <mainClass>com.reins.DumpLog2Kafka</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,12 +1,9 @@
 package com.reins.entity;
 
-import org.apache.spark.sql.execution.columnar.LONG;
-
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
-@Slf4j
 public class TaxiRecordLog {
     private Long taxiId;
     private String tripId;

@@ -8,6 +8,8 @@ import org.apache.spark.sql.types.StructType;
 import org.apache.spark.sql.types.DataTypes;
 
 public class DumpLog2Kafka {
+    private static String topic = "taxi_log_test2";
+
     public static void main(String[] args) {
         // Load the text file into Spark.
         // if (args.length != 4) {
@@ -19,10 +21,11 @@ public class DumpLog2Kafka {
                 .getOrCreate();
         spark.sparkContext().setLogLevel("ERROR");
         StructType schema = new StructType()
+                .add("uuid", DataTypes.StringType)
                 .add("taxiId", DataTypes.LongType)
                 .add("tripId", DataTypes.StringType)
-                .add("timestamp", DataTypes.LongType)
-                .add("longtitude", DataTypes.DoubleType)
+                .add("ts", DataTypes.LongType)
+                .add("longitude", DataTypes.DoubleType)
                 .add("latitude", DataTypes.DoubleType)
                 .add("speed", DataTypes.DoubleType);
         Dataset<Row> rawData = spark
@@ -37,12 +40,12 @@ public class DumpLog2Kafka {
             // StreamingQuery query =
             // result.writeStream().outputMode(OutputMode.Update()).format("console").start();
             StreamingQuery query = rawData
-                    .selectExpr("CAST(timestamp AS STRING) AS key", "to_json(struct(*)) AS value")
+                    .selectExpr("CAST(uuid AS STRING) AS key", "to_json(struct(*)) AS value")
                     .writeStream()
                     .format("kafka")
                     .outputMode("append")
-                    .option("kafka.bootstrap.servers", "localhost:9092")
-                    .option("topic", "taxi_log")
+                    .option("kafka.bootstrap.servers", "10.0.0.203:9092")
+                    .option("topic", topic)
                     .option("checkpointLocation", "/home/reins/zzt/code/spark-into-kafka/ckpt")
                     .start();
             query.awaitTermination();

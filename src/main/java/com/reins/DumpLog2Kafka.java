@@ -8,7 +8,7 @@ import org.apache.spark.sql.types.StructType;
 import org.apache.spark.sql.types.DataTypes;
 
 public class DumpLog2Kafka {
-    private static String topic = "taxi_log_test2";
+    private static String topic = "taxi_log_1";
 
     public static void main(String[] args) {
         // Load the text file into Spark.
